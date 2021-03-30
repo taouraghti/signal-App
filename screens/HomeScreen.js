@@ -17,6 +17,13 @@ const HomeScreen = ({ navigation }) => {
         })
     }
     
+    const enterChat = (id, chatName) => {
+        navigation.navigate("Chat", {
+            id: id,
+            chatName: chatName
+        })
+    }
+
     useEffect(() => {
         const unsubscribe = db.collection('chats').onSnapshot(snapshot => {
             setChats(snapshot.docs.map(doc => ({
@@ -73,7 +80,12 @@ const HomeScreen = ({ navigation }) => {
         <SafeAreaView>
             <ScrollView style={styles.container}>
                 {chats.map(({id, data: { chatName }}) => (
-                    <CustomListItem key={id} id={id} chatName={chatName} />
+                    <CustomListItem 
+                        key={id}
+                        id={id}
+                        chatName={chatName}
+                        enterChat={enterChat}
+                    />
                     ))
                 }
             </ScrollView>
